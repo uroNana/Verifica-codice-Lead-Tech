@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Verifica codice Lead Tech</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="home_fragment_label">Home</string>
+    <string name="input_fragment_label">Inserisci il tuo codice</string>
+    <string name="scanner_fragment_label">Scansiona il tuo codice</string>
+    <string name="chronology_fragment_label">Cronologia</string>
+    <!-- Strings used for edit text -->
+    <string name="edit_text">es. 3-598-21507-X</string>
+    <!-- Strings used for text views -->
+    <string name="text_view_result">Risultato analisi</string>
+    <string name="text_view_title">Analizza il tuo codice</string>
+    <!-- Strings used for buttons -->
+    <string name="button_input_code">Inserisci il codice manualmente</string>
+    <string name="button_scanner_code">Scansiona il codice a barre</string>
+    <string name="button_scan">Scansiona</string>
+</resources>

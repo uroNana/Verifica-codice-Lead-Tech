@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.verificacodiceleadtech.HomeFragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_home_fragment_to_chronology_item_fragment"
+            app:destination="@id/chronology_item_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_input_code_fragment"
+            app:destination="@id/input_code_fragment" />
+        <action
+            android:id="@+id/action_home_fragment_to_scanner_fragment"
+            app:destination="@id/scanner_fragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/chronology_item_fragment"
+        android:name="com.example.verificacodiceleadtech.ChronologyItemFragment"
+        android:label="@string/chronology_fragment_label"
+        tools:layout="@layout/fragment_chronology_item">
+
+        <action
+            android:id="@+id/action_chronology_item_fragment_to_home_fragment"
+            app:destination="@id/home_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/input_code_fragment"
+        android:name="com.example.verificacodiceleadtech.InputCodeFragment"
+        android:label="@string/input_fragment_label"
+        tools:layout="@layout/fragment_input_code" >
+    <action
+        android:id="@+id/action_inputCodeFragment_to_Home"
+        app:destination="@id/home_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanner_fragment"
+        android:name="com.example.verificacodiceleadtech.ScannerFragment"
+        android:label="@string/scanner_fragment_label"
+        tools:layout="@layout/fragment_scanner" >
+    <action
+        android:id="@+id/action_scanner_fragment_to_home_fragment"
+        app:destination="@id/home_fragment" />
+    </fragment>
+</navigation>
