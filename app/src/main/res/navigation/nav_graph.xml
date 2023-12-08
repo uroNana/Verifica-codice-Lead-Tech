@@ -14,7 +14,7 @@
             android:name="inputCode"
             app:argType="string" />
         <action
-            android:id="@+id/action_home_fragment_to_chronology_item_fragment"
+            android:id="@+id/action_activity_to_chronology_item_fragment"
             app:destination="@id/chronology_item_fragment" />
         <action
             android:id="@+id/action_home_fragment_to_input_code_fragment"
@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_chronology_item_fragment_to_home_fragment"
             app:destination="@id/home_fragment" />
+        <action
+            android:id="@+id/action_activity_to_chronology_item_fragment"
+            app:destination="@id/chronology_item_fragment" />
     </fragment>
     <fragment
         android:id="@+id/input_code_fragment"
@@ -42,6 +45,9 @@
     <action
         android:id="@+id/action_inputCodeFragment_to_Home"
         app:destination="@id/home_fragment" />
+        <action
+            android:id="@+id/action_activity_to_chronology_item_fragment"
+            app:destination="@id/chronology_item_fragment" />
     </fragment>
     <fragment
         android:id="@+id/scanner_fragment"
@@ -51,6 +57,9 @@
     <action
         android:id="@+id/action_scanner_fragment_to_home_fragment"
         app:destination="@id/home_fragment" />
+        <action
+            android:id="@+id/action_activity_to_chronology_item_fragment"
+            app:destination="@id/chronology_item_fragment" />
         <argument
             android:name="inputCode"
             app:argType="string" />

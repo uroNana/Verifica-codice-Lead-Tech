@@ -18,4 +18,5 @@
         android:text="@string/button_scan"
         android:textSize="@dimen/text_size"
         android:backgroundTint="@color/bg_button"/>
+
 </RelativeLayout>

@@ -24,7 +24,7 @@ class ScannerFragment : Fragment() {
     private lateinit var cameraSource: CameraSource
     private lateinit var cameraPreview: SurfaceView
     private val REQUEST_CAMERA_PERMISSION = 100
-
+    private var isScanningEnabled = true
 
     companion object {
         fun newInstance() = ScannerFragment()
@@ -43,18 +43,24 @@ class ScannerFragment : Fragment() {
         cameraPreview = view.findViewById(R.id.cameraPreview)
         val buttonScan: Button = view.findViewById(R.id.button_scan)
 
-        buttonScan.setOnClickListener {
-            startCameraSource()
-        }
+        // Abilita la scansione quando il pulsante "Scansiona" viene premuto
+
+        isScanningEnabled = true
+        // Avvia la scansione quando il fragment viene creato
+        startCameraSource()
     }
 
     override fun onResume() {
         super.onResume()
-        startCameraSource()
+        // Ripristina la scansione quando il fragment è in primo piano
+        if (isScanningEnabled) {
+            startCameraSource()
+        }
     }
 
     override fun onPause() {
         super.onPause()
+        // Rilascia la telecamera quando il fragment è in background
         if (::cameraSource.isInitialized) {
             cameraSource.release()
         }
@@ -82,7 +88,7 @@ class ScannerFragment : Fragment() {
         cameraPreview.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 try {
-                    if (checkCameraPermission()) {
+                    if (checkCameraPermission() && isScanningEnabled) {
                         cameraSource.start(holder)
                     } else {
                         requestCameraPermission()
@@ -103,17 +109,36 @@ class ScannerFragment : Fragment() {
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>?) {
                 val barcodes: SparseArray<Barcode> = detections?.detectedItems ?: return
+
                 if (barcodes.size() > 0) {
+                    // Ottieni il primo codice a barre
                     val code = barcodes.valueAt(0).displayValue
-                    activity?.runOnUiThread {
-                        onBarcodeScanned(code)
-                    }
+
+                    // Verifica se il codice è composto da 10 cifre
+                    //if (code.matches(Regex("\\d{10}"))) {
+                        // Imposta il listener solo se la scansione è abilitata
+                        if (isScanningEnabled) {
+                            val buttonScan: Button? = view?.findViewById(R.id.button_scan)
+                            buttonScan?.setOnClickListener {
+                                activity?.runOnUiThread {
+                                    onBarcodeScanned(code)
+                                }
+                            }
+
+                            // Disabilita la scansione per evitare gestioni multiple dello stesso codice
+                            isScanningEnabled = false
+                        }
+                    //}
                 }
             }
         })
+
     }
 
     private fun onBarcodeScanned(barcode: String) {
+        // Disabilita la scansione dopo aver rilevato il codice
+        isScanningEnabled = false
+        // Esegue la navigazione alla HomeFragment
         val action = ScannerFragmentDirections.actionScannerFragmentToHomeFragment(barcode)
         findNavController().navigate(action)
     }
@@ -132,3 +157,4 @@ class ScannerFragment : Fragment() {
         )
     }
 }
+
