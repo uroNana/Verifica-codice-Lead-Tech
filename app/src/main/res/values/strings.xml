@@ -9,10 +9,12 @@
     <!-- Strings used for edit text -->
     <string name="edit_text">es. 3-598-21507-X</string>
     <!-- Strings used for text views -->
-    <string name="text_view_result">Risultato analisi</string>
+    <string name="text_view_result">Il codice</string>
     <string name="text_view_title">Analizza il tuo codice</string>
     <!-- Strings used for buttons -->
     <string name="button_input_code">Inserisci il codice manualmente</string>
     <string name="button_scanner_code">Scansiona il codice a barre</string>
     <string name="button_scan">Scansiona</string>
+    <string name="valido">é valido</string>
+    <string name="non_valido">Non è valido</string>
 </resources>
