@@ -41,7 +41,7 @@
                 android:layout_marginHorizontal="50dp"
                 android:backgroundTint="#4C5C97"
                 android:hint="@string/edit_text"
-                android:inputType="textCapCharacters|text|number"
+                android:inputType="none"
                 android:textSize="@dimen/text_size"
                 android:gravity="center"
                 android:layout_gravity="center"

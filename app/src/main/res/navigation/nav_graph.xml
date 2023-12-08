@@ -10,7 +10,9 @@
         android:name="com.example.verificacodiceleadtech.HomeFragment"
         android:label="@string/home_fragment_label"
         tools:layout="@layout/fragment_home">
-
+        <argument
+            android:name="inputCode"
+            app:argType="string" />
         <action
             android:id="@+id/action_home_fragment_to_chronology_item_fragment"
             app:destination="@id/chronology_item_fragment" />
@@ -49,5 +51,8 @@
     <action
         android:id="@+id/action_scanner_fragment_to_home_fragment"
         app:destination="@id/home_fragment" />
+        <argument
+            android:name="inputCode"
+            app:argType="string" />
     </fragment>
 </navigation>

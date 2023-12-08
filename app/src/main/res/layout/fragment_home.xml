@@ -60,9 +60,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_check"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_toEndOf="@id/text_home_card_check"
-                    android:layout_below="@id/text_home_card_number" />
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_toStartOf="@id/text_home_card_number"
+                    android:layout_centerVertical="true" />
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
