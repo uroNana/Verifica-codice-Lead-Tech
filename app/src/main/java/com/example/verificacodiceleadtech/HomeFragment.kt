@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            val inputCode = "3-598-21507-X"
+            val inputCode = "3–598–21507-X"
             val isCodeValid = codeCheckFunction(inputCode)
 
             if (isCodeValid) {
@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun codeCheckFunction(inputCode: String): Boolean {
-        val cleanedCode = inputCode.replace("-", "")
+        val cleanedCode = inputCode.replace("[\\-–]".toRegex(), "")
         if (cleanedCode.length != 10) {
             return false
         }
@@ -58,14 +58,14 @@ class HomeFragment : Fragment() {
     private fun codeIsValid(inputCode: String) {
         binding.cardViewHome.visibility = View.VISIBLE
         binding.textHomeCardNumber.text = inputCode
-        binding.textHomeCardCheck.text = getString(R.string.valido)
+        binding.textHomeCardCheck.text = getString(R.string.valid)
         binding.imageHomeCardCheck.setImageResource(R.drawable.baseline_check)
     }
 
     private fun codeIsNotValid(inputCode: String) {
         binding.cardViewHome.visibility = View.VISIBLE
         binding.textHomeCardNumber.text = inputCode
-        binding.textHomeCardCheck.text = getString(R.string.non_valido)
+        binding.textHomeCardCheck.text = getString(R.string.not_valid)
         binding.imageHomeCardCheck.setImageResource(R.drawable.baseline_clear)
     }
 

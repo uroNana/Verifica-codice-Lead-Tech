@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.verificacodiceleadtech.placeholder.PlaceholderContent
 
-/**
- * A fragment representing a list of Items.
- */
+
 class ChronologyItemFragment : Fragment() {
 
     private var columnCount = 2
@@ -31,17 +30,33 @@ class ChronologyItemFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chronology_item_list, container, false)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
+        val recyclerView: RecyclerView = view.findViewById(R.id.list)
+        val emptyTextView: TextView = view.findViewById(R.id.empy_text_view)
+
+        recyclerView.layoutManager = when {
+            columnCount <= 1 -> LinearLayoutManager(context)
+            else -> GridLayoutManager(context, columnCount)
         }
+
+        val adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
+        recyclerView.adapter = adapter
+
+        emptyTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+
         return view
+    }
+
+
+    private fun updateEmptyTextViewVisibility(adapter: MyItemRecyclerViewAdapter) {
+        val emptyTextView: TextView = requireView().findViewById(R.id.empy_text_view)
+        emptyTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+    }
+
+    // Funzione chiamata quando vengono aggiunti o rimossi elementi dalla RecyclerView
+    private fun onDataChanged() {
+        val recyclerView: RecyclerView = requireView().findViewById(R.id.list)
+        val adapter = recyclerView.adapter as MyItemRecyclerViewAdapter
+        updateEmptyTextViewVisibility(adapter)
     }
 
     companion object {
