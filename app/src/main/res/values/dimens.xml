@@ -6,4 +6,5 @@
     <dimen name="margin_small">24dp</dimen>
     <dimen name="margin_large">72dp</dimen>
     <dimen name="padding_card">20dp</dimen>
+    <dimen name="image_margin">5dp</dimen>
 </resources>
