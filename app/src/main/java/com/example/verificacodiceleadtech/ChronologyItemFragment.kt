@@ -46,9 +46,9 @@ class ChronologyItemFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
 
-        recyclerView.layoutManager = when {
-            columnCount <= 1 -> LinearLayoutManager(context)
-            else -> GridLayoutManager(context, columnCount)
+        recyclerView.layoutManager = LinearLayoutManager(context).apply {
+            reverseLayout = true
+            stackFromEnd = true
         }
 
         lifecycleScope.launch {
