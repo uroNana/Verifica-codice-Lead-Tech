@@ -24,6 +24,6 @@
         android:layout_marginLeft="@dimen/text_margin"
         android:layout_marginRight="@dimen/text_margin"
         app:layoutManager="LinearLayoutManager"
-        tools:context=".ChronologyItemFragment"
+        tools:context=".chronology.ChronologyItemFragment"
         tools:listitem="@layout/fragment_chronology_item" />
 </LinearLayout>

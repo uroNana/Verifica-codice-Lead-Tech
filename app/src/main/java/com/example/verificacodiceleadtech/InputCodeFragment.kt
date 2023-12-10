@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.verificacodiceleadtech.databinding.FragmentInputCodeBinding
+import com.example.verificacodiceleadtech.usecase.InputCodeViewModel
 
 class InputCodeFragment : Fragment() {
 

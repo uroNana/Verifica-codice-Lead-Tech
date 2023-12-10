@@ -113,22 +113,17 @@ class ScannerFragment : Fragment() {
                 if (barcodes.size() > 0) {
                     // Ottieni il primo codice a barre
                     val code = barcodes.valueAt(0).displayValue
-
-                    // Verifica se il codice è composto da 10 cifre
-                    //if (code.matches(Regex("\\d{10}"))) {
-                        // Imposta il listener solo se la scansione è abilitata
-                        if (isScanningEnabled) {
-                            val buttonScan: Button? = view?.findViewById(R.id.button_scan)
-                            buttonScan?.setOnClickListener {
-                                activity?.runOnUiThread {
-                                    onBarcodeScanned(code)
-                                }
+                    if (isScanningEnabled) {
+                        val buttonScan: Button? = view?.findViewById(R.id.button_scan)
+                        buttonScan?.setOnClickListener {
+                            activity?.runOnUiThread {
+                                onBarcodeScanned(code)
                             }
-
-                            // Disabilita la scansione per evitare gestioni multiple dello stesso codice
-                            isScanningEnabled = false
                         }
-                    //}
+
+                        // Disabilita la scansione per evitare gestioni multiple dello stesso codice
+                        isScanningEnabled = false
+                    }
                 }
             }
         })
@@ -139,7 +134,10 @@ class ScannerFragment : Fragment() {
         // Disabilita la scansione dopo aver rilevato il codice
         isScanningEnabled = false
         // Esegue la navigazione alla HomeFragment
-        val action = ScannerFragmentDirections.actionScannerFragmentToHomeFragment(barcode)
+        val action =
+            com.example.verificacodiceleadtech.ScannerFragmentDirections.actionScannerFragmentToHomeFragment(
+                barcode
+            )
         findNavController().navigate(action)
     }
 

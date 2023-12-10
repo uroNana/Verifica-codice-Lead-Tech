@@ -12,7 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.verificacodiceleadtech.databinding.FragmentHomeBinding
 import android.Manifest
 import androidx.room.Room
-import com.example.verificacodiceleadtech.entity.CodeEntry
+import com.example.verificacodiceleadtech.repository.CodeDatabase
+import com.example.verificacodiceleadtech.repository.entity.CodeEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

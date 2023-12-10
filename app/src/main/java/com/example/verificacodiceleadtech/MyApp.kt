@@ -2,6 +2,7 @@ package com.example.verificacodiceleadtech
 
 import android.app.Application
 import androidx.room.Room
+import com.example.verificacodiceleadtech.repository.CodeDatabase
 
 class MyApp : Application() {
 

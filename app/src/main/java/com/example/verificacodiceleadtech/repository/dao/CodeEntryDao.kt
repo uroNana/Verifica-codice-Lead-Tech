@@ -1,11 +1,11 @@
-package com.example.verificacodiceleadtech.dao
+package com.example.verificacodiceleadtech.repository.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.verificacodiceleadtech.entity.CodeEntry
+import com.example.verificacodiceleadtech.repository.entity.CodeEntry
 
 @Dao
 interface CodeEntryDao {

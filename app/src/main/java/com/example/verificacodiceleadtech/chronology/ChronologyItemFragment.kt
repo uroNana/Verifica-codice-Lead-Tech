@@ -1,8 +1,7 @@
-package com.example.verificacodiceleadtech
+package com.example.verificacodiceleadtech.chronology
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +11,9 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.example.verificacodiceleadtech.entity.CodeEntry
+import com.example.verificacodiceleadtech.R
+import com.example.verificacodiceleadtech.repository.CodeDatabase
+import com.example.verificacodiceleadtech.repository.entity.CodeEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

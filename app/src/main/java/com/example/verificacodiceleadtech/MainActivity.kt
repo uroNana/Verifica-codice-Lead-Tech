@@ -9,6 +9,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.NavController
+import com.example.verificacodiceleadtech.R
 import com.example.verificacodiceleadtech.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

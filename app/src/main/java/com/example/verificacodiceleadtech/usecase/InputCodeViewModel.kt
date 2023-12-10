@@ -1,4 +1,4 @@
-package com.example.verificacodiceleadtech
+package com.example.verificacodiceleadtech.usecase
 
 import androidx.lifecycle.ViewModel
 

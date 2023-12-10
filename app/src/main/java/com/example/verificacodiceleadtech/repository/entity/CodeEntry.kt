@@ -1,4 +1,4 @@
-package com.example.verificacodiceleadtech.entity
+package com.example.verificacodiceleadtech.repository.entity
 
 import androidx.room.Entity
 
