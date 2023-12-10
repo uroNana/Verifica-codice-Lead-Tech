@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import androidx.navigation.NavController
-import com.example.verificacodiceleadtech.R
 import com.example.verificacodiceleadtech.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -31,9 +30,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // Aggiungi un listener per gli eventi di navigazione
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            // Imposta la visibilità del menu in base al fragment corrente
             invalidateOptionsMenu()
         }
     }
@@ -45,8 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         val currentDestination = navController.currentDestination
-
-        // Imposta la visibilità dell'elemento del menu in base al fragment corrente
         menu.findItem(R.id.action_settings)?.isVisible = currentDestination?.id != R.id.chronology_item_fragment
 
         return super.onPrepareOptionsMenu(menu)

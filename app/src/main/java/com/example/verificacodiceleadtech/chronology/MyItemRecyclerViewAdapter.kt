@@ -20,10 +20,10 @@ class MyItemRecyclerViewAdapter(
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
     private var values: List<CodeEntry> = emptyList()
     private val isEmpty: MutableLiveData<Boolean> = MutableLiveData(true)
-    init {
-        valuesLiveData.observeForever { codes ->
-            values = codes
-            isEmpty.value = codes.isEmpty()
+    fun setValues(values: List<CodeEntry>) {
+        values.apply {
+            this@MyItemRecyclerViewAdapter.values = this
+            isEmpty.value = this.isEmpty()
             notifyDataSetChanged()
         }
     }
@@ -37,7 +37,6 @@ class MyItemRecyclerViewAdapter(
                 false
             )
         )
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

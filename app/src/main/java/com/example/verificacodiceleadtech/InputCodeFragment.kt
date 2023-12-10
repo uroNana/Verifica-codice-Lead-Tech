@@ -1,6 +1,5 @@
 package com.example.verificacodiceleadtech
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,14 +34,6 @@ class InputCodeFragment : Fragment() {
             findNavController().navigate(R.id.action_inputCodeFragment_to_Home, bundle)
         }
     }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(InputCodeViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
     fun getEnteredCode(): String {
         return binding.editText.text.toString()
     }

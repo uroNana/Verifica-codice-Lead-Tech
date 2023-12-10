@@ -8,30 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.verificacodiceleadtech.R
 import com.example.verificacodiceleadtech.repository.CodeDatabase
-import com.example.verificacodiceleadtech.repository.entity.CodeEntry
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.verificacodiceleadtech.usecase.ChronologyViewModel
+
 
 
 class ChronologyItemFragment : Fragment() {
 
-    private var columnCount = 1
     private lateinit var database: CodeDatabase
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
-
+    private lateinit var chronologyViewModel: ChronologyViewModel
+    private lateinit var adapter: MyItemRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,49 +40,26 @@ class ChronologyItemFragment : Fragment() {
             reverseLayout = true
             stackFromEnd = true
         }
+        chronologyViewModel = ViewModelProvider(this).get(ChronologyViewModel::class.java)
 
-        lifecycleScope.launch {
-            val values = getScannedCodesFromDatabase()
-            val adapter = MyItemRecyclerViewAdapter(values)
-            recyclerView.adapter = adapter
-            adapter.registerEmptyStateObserver(viewLifecycleOwner) { isEmpty ->
-                emptyTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        chronologyViewModel.getAllCodeEntries().observe(viewLifecycleOwner) { codeEntries ->
+            codeEntries?.let {
+                adapter.setValues(it)
+                updateEmptyTextViewVisibility(adapter)
             }
         }
 
+        adapter = MyItemRecyclerViewAdapter(chronologyViewModel.getAllCodeEntries())
+        recyclerView.adapter = adapter
+        adapter.registerEmptyStateObserver(viewLifecycleOwner) { isEmpty ->
+            emptyTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        }
 
         return view
     }
 
-    private suspend fun getScannedCodesFromDatabase(): LiveData<List<CodeEntry>> {
-        return withContext(Dispatchers.IO) {
-            database.codeEntryDao().getAllCodeEntries()
-        }
-    }
     private fun updateEmptyTextViewVisibility(adapter: MyItemRecyclerViewAdapter) {
         val emptyTextView: TextView = requireView().findViewById(R.id.empy_text_view)
         emptyTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
-    }
-
-    // Funzione chiamata quando vengono aggiunti o rimossi elementi dalla RecyclerView
-    private fun onDataChanged() {
-        val recyclerView: RecyclerView = requireView().findViewById(R.id.list)
-        val adapter = recyclerView.adapter as MyItemRecyclerViewAdapter
-        updateEmptyTextViewVisibility(adapter)
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ChronologyItemFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
     }
 }

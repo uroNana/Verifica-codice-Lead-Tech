@@ -26,10 +26,6 @@ class ScannerFragment : Fragment() {
     private val REQUEST_CAMERA_PERMISSION = 100
     private var isScanningEnabled = true
 
-    companion object {
-        fun newInstance() = ScannerFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,18 +37,12 @@ class ScannerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         cameraPreview = view.findViewById(R.id.cameraPreview)
-        val buttonScan: Button = view.findViewById(R.id.button_scan)
-
-        // Abilita la scansione quando il pulsante "Scansiona" viene premuto
-
         isScanningEnabled = true
-        // Avvia la scansione quando il fragment viene creato
         startCameraSource()
     }
 
     override fun onResume() {
         super.onResume()
-        // Ripristina la scansione quando il fragment è in primo piano
         if (isScanningEnabled) {
             startCameraSource()
         }
@@ -60,7 +50,6 @@ class ScannerFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        // Rilascia la telecamera quando il fragment è in background
         if (::cameraSource.isInitialized) {
             cameraSource.release()
         }
@@ -111,7 +100,6 @@ class ScannerFragment : Fragment() {
                 val barcodes: SparseArray<Barcode> = detections?.detectedItems ?: return
 
                 if (barcodes.size() > 0) {
-                    // Ottieni il primo codice a barre
                     val code = barcodes.valueAt(0).displayValue
                     if (isScanningEnabled) {
                         val buttonScan: Button? = view?.findViewById(R.id.button_scan)
@@ -120,8 +108,6 @@ class ScannerFragment : Fragment() {
                                 onBarcodeScanned(code)
                             }
                         }
-
-                        // Disabilita la scansione per evitare gestioni multiple dello stesso codice
                         isScanningEnabled = false
                     }
                 }
@@ -131,11 +117,9 @@ class ScannerFragment : Fragment() {
     }
 
     private fun onBarcodeScanned(barcode: String) {
-        // Disabilita la scansione dopo aver rilevato il codice
         isScanningEnabled = false
-        // Esegue la navigazione alla HomeFragment
         val action =
-            com.example.verificacodiceleadtech.ScannerFragmentDirections.actionScannerFragmentToHomeFragment(
+            ScannerFragmentDirections.actionScannerFragmentToHomeFragment(
                 barcode
             )
         findNavController().navigate(action)
