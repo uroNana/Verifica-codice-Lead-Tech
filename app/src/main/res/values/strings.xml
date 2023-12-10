@@ -9,7 +9,7 @@
     <!-- Strings used for edit text -->
     <string name="edit_text">es. 3–598–21507-X</string>
     <!-- Strings used for text views -->
-    <string name="text_view_result">Il codice</string>
+    <string name="text_view_result">Il codice :</string>
     <string name="text_view_title">Analizza il tuo codice</string>
     <string name="valid">é valido</string>
     <string name="not_valid">Non è valido</string>

@@ -4,4 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="bg_button">#60A1E8</color>
     <color name="bg_edit_text">#B5D8FD</color>
+    <color name="editText_color">#4C5C97</color>
+    <color name="gradient_start">#549CEA</color>
+    <color name="gradient_center">#60A1E8</color>
+    <color name="gradient_end">#73ABE8</color>
+    <color name="laucher_fillColor">#FFCD36</color>
+    <color name="search_vector_fillColor">#00000000</color>
+    <color name="search_vector_strokeColor">#434C59</color>
 </resources>

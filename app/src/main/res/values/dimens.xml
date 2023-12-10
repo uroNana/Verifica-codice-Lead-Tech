@@ -5,6 +5,14 @@
     <dimen name="corner_radius">20dp</dimen>
     <dimen name="margin_small">24dp</dimen>
     <dimen name="margin_large">72dp</dimen>
-    <dimen name="padding_card">20dp</dimen>
+    <dimen name="padding_card">15dp</dimen>
     <dimen name="image_margin">5dp</dimen>
+    <dimen name="textView_margin_top">7dp</dimen>
+    <dimen name="View_height">1dp</dimen>
+    <dimen name="editText_marginHorizontal">50dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="launcher_width">108dp</dimen>
+    <dimen name="launcher_height">108dp</dimen>
+    <dimen name="search_vector_width">25dp</dimen>
+    <dimen name="search_vector_height">24dp</dimen>
 </resources>

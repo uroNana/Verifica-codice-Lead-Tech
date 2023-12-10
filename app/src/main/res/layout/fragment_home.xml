@@ -10,7 +10,7 @@
             android:id="@+id/card_view_home"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="@dimen/margin_small"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_large"
@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="gone">
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -44,7 +44,8 @@
                     android:textSize="@dimen/text_size"
                     android:textColor="@color/white"
                     android:layout_below="@id/text_home_card_title"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/textView_margin_top"/>
 
                 <TextView
                     android:id="@+id/text_home_card_check"
@@ -54,15 +55,17 @@
                     android:textSize="@dimen/text_size"
                     android:textColor="@color/white"
                     android:layout_below="@id/text_home_card_number"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignBottom="@id/image_home_card_check"
+                    android:gravity="center"/>
                 <ImageView
                     android:id="@+id/image_home_card_check"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_check"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:layout_toStartOf="@id/text_home_card_number"
-                    android:layout_centerVertical="true" />
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_toEndOf="@id/text_home_card_check"
+                    android:layout_below="@id/text_home_card_number"/>
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
