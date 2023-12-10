@@ -11,14 +11,19 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.verificacodiceleadtech.databinding.FragmentHomeBinding
 import android.Manifest
-
+import androidx.room.Room
+import com.example.verificacodiceleadtech.entity.CodeEntry
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val REQUEST_CAMERA_PERMISSION = 100
+    private lateinit var database: CodeDatabase
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,11 +34,13 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        database = Room.databaseBuilder(requireContext(), CodeDatabase::class.java, "app-database").build()
+
         val inputCode = arguments?.getString("inputCode")
 
         if (inputCode != null) {
             val isCodeValid = codeCheckFunction(inputCode)
-
+            saveScannedCodeToDatabase(inputCode, isCodeValid)
             if (isCodeValid) {
                 showCodeDetails(inputCode, R.string.valid, R.drawable.baseline_check)
             } else {
@@ -53,7 +60,12 @@ class HomeFragment : Fragment() {
         }
     }
 
-
+    private fun saveScannedCodeToDatabase(code: String, isValid: Boolean) {
+        val scannedCode = CodeEntry(code = code, isValid = isValid)
+        GlobalScope.launch(Dispatchers.IO) {
+            database.codeEntryDao().insert(scannedCode)
+        }
+    }
     private fun checkCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),

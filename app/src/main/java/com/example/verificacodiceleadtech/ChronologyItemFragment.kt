@@ -9,12 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.verificacodiceleadtech.placeholder.PlaceholderContent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import com.example.verificacodiceleadtech.entity.CodeEntry
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class ChronologyItemFragment : Fragment() {
 
-    private var columnCount = 2
+    private var columnCount = 1
+    private lateinit var database: CodeDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,25 +35,40 @@ class ChronologyItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        database = Room.databaseBuilder(
+            requireContext(),
+            CodeDatabase::class.java,
+            "app-database"
+        ).build()
+
         val view = inflater.inflate(R.layout.fragment_chronology_item_list, container, false)
+        val emptyTextView: TextView = view.findViewById(R.id.empy_text_view)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
-        val emptyTextView: TextView = view.findViewById(R.id.empy_text_view)
 
         recyclerView.layoutManager = when {
             columnCount <= 1 -> LinearLayoutManager(context)
             else -> GridLayoutManager(context, columnCount)
         }
 
-        val adapter = MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS)
-        recyclerView.adapter = adapter
+        lifecycleScope.launch {
+            val values = getScannedCodesFromDatabase()
+            val adapter = MyItemRecyclerViewAdapter(values)
+            recyclerView.adapter = adapter
+            adapter.registerEmptyStateObserver(viewLifecycleOwner) { isEmpty ->
+                emptyTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
+            }
+        }
 
-        emptyTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
 
         return view
     }
 
-
+    private suspend fun getScannedCodesFromDatabase(): LiveData<List<CodeEntry>> {
+        return withContext(Dispatchers.IO) {
+            database.codeEntryDao().getAllCodeEntries()
+        }
+    }
     private fun updateEmptyTextViewVisibility(adapter: MyItemRecyclerViewAdapter) {
         val emptyTextView: TextView = requireView().findViewById(R.id.empy_text_view)
         emptyTextView.visibility = if (adapter.itemCount == 0) View.VISIBLE else View.GONE
