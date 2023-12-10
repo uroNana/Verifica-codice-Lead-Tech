@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/chronology_item_fragment"
-        android:name="com.example.verificacodiceleadtech.chronology.ChronologyItemFragment"
+        android:name="com.example.verificacodiceleadtech.ChronologyItemFragment"
         android:label="@string/chronology_fragment_label"
         tools:layout="@layout/fragment_chronology_item">
 

@@ -1,4 +1,4 @@
-package com.example.verificacodiceleadtech.chronology
+package com.example.verificacodiceleadtech
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,10 +10,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import com.example.verificacodiceleadtech.R
+import com.example.verificacodiceleadtech.chronology.ChronologyViewModel
+import com.example.verificacodiceleadtech.chronology.MyItemRecyclerViewAdapter
 import com.example.verificacodiceleadtech.repository.CodeDatabase
-import com.example.verificacodiceleadtech.usecase.ChronologyViewModel
-
 
 
 class ChronologyItemFragment : Fragment() {

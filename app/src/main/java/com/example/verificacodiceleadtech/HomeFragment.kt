@@ -11,19 +11,20 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.verificacodiceleadtech.databinding.FragmentHomeBinding
 import android.Manifest
-import androidx.room.Room
-import com.example.verificacodiceleadtech.repository.CodeDatabase
-import com.example.verificacodiceleadtech.repository.entity.CodeEntry
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.verificacodiceleadtech.repository.CodeRepository
+import com.example.verificacodiceleadtech.home.HomeViewModel
+import com.example.verificacodiceleadtech.home.HomeViewModelFactory
+import com.example.verificacodiceleadtech.home.ScannedCodeDetails
 
 
 class HomeFragment : Fragment() {
+
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val REQUEST_CAMERA_PERMISSION = 100
-    private lateinit var database: CodeDatabase
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,23 +36,28 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        database = Room.databaseBuilder(requireContext(), CodeDatabase::class.java, "app-database").build()
+
+        homeViewModel = ViewModelProvider(
+            this,
+            HomeViewModelFactory(CodeRepository((requireActivity().application as MyApp).database.codeEntryDao()))
+        ).get(HomeViewModel::class.java)
+
+
+        homeViewModel.scannedCodeDetails.observe(viewLifecycleOwner, Observer { scannedCodeDetails ->
+            showCodeDetails(scannedCodeDetails)
+        })
 
         val inputCode = arguments?.getString("inputCode")
 
         if (inputCode != null) {
-            val isCodeValid = codeCheckFunction(inputCode)
-            saveScannedCodeToDatabase(inputCode, isCodeValid)
-            if (isCodeValid) {
-                showCodeDetails(inputCode, R.string.valid, R.drawable.baseline_check)
-            } else {
-                showCodeDetails(inputCode, R.string.not_valid, R.drawable.baseline_clear)
-            }
+           homeViewModel.processScannedCode(inputCode)
+
         }
 
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_home_fragment_to_input_code_fragment)
         }
+
         binding.buttonSecond.setOnClickListener {
             if (checkCameraPermission()) {
                 findNavController().navigate(R.id.action_home_fragment_to_scanner_fragment)
@@ -61,12 +67,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun saveScannedCodeToDatabase(code: String, isValid: Boolean) {
-        val scannedCode = CodeEntry(code = code, isValid = isValid)
-        GlobalScope.launch(Dispatchers.IO) {
-            database.codeEntryDao().insert(scannedCode)
-        }
+    private fun showCodeDetails(scannedCodeDetails: ScannedCodeDetails) {
+        binding.cardViewHome.visibility = View.VISIBLE
+        binding.textHomeCardNumber.text = scannedCodeDetails.code
+        binding.textHomeCardCheck.text = getString(scannedCodeDetails.messageResId)
+        binding.imageHomeCardCheck.setImageResource(scannedCodeDetails.imageResId)
     }
+
     private fun checkCameraPermission(): Boolean {
         return ContextCompat.checkSelfPermission(
             requireContext(),
@@ -98,27 +105,6 @@ class HomeFragment : Fragment() {
                 ).show()
             }
         }
-    }
-
-    private fun codeCheckFunction(inputCode: String): Boolean {
-        val cleanedCode = inputCode.replace("[\\-–]".toRegex(), "")
-        if (cleanedCode.length != 10) {
-            return false
-        }
-        var result = 0
-        for (i in 0 until 10) {
-            val char = cleanedCode[i]
-            val value = if (char == 'X') 10 else Character.getNumericValue(char)
-            result += value * (10 - i)
-        }
-        return result % 11 == 0
-    }
-
-    private fun showCodeDetails(inputCode: String, messageResId: Int, imageResId: Int) {
-        binding.cardViewHome.visibility = View.VISIBLE
-        binding.textHomeCardNumber.text = inputCode
-        binding.textHomeCardCheck.text = getString(messageResId)
-        binding.imageHomeCardCheck.setImageResource(imageResId)
     }
 
     override fun onDestroyView() {

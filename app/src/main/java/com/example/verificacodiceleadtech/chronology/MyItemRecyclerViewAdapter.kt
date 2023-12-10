@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.verificacodiceleadtech.R
-
 import com.example.verificacodiceleadtech.databinding.FragmentChronologyItemBinding
 import com.example.verificacodiceleadtech.repository.entity.CodeEntry
 

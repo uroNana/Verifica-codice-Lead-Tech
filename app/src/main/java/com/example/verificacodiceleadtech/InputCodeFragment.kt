@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.verificacodiceleadtech.databinding.FragmentInputCodeBinding
-import com.example.verificacodiceleadtech.usecase.InputCodeViewModel
 
 class InputCodeFragment : Fragment() {
 
     private lateinit var binding: FragmentInputCodeBinding
-    private lateinit var viewModel: InputCodeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
