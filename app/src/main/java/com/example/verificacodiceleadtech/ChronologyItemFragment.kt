@@ -31,7 +31,6 @@ class ChronologyItemFragment : Fragment() {
         ).build()
 
         val view = inflater.inflate(R.layout.fragment_chronology_item_list, container, false)
-        val emptyTextView: TextView = view.findViewById(R.id.empy_text_view)
 
         val recyclerView: RecyclerView = view.findViewById(R.id.list)
 
@@ -50,9 +49,7 @@ class ChronologyItemFragment : Fragment() {
 
         adapter = MyItemRecyclerViewAdapter(chronologyViewModel.getAllCodeEntries())
         recyclerView.adapter = adapter
-        adapter.registerEmptyStateObserver(viewLifecycleOwner) { isEmpty ->
-            emptyTextView.visibility = if (isEmpty) View.VISIBLE else View.GONE
-        }
+
 
         return view
     }

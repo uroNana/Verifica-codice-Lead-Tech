@@ -57,8 +57,4 @@ class MyItemRecyclerViewAdapter(
             return super.toString() + " '" + contentView.text + "'"
         }
     }
-    fun registerEmptyStateObserver(owner: LifecycleOwner, observer: Observer<Boolean>) {
-        isEmpty.observe(owner, observer)
-    }
-
 }
